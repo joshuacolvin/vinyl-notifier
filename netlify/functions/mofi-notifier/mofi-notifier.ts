@@ -5,12 +5,13 @@ import {
   schedule,
 } from "@netlify/functions";
 import { mofiScraper } from "../../../src/scrapers/mofi-scraper";
+import { sendSMS } from "../../../src/utils/twilio-notifier";
 import fetch from "../../../src/utils/fetch";
 
 const ENDPOINT =
   process.env?.MOFI_ENDPOINT || "https://mofi.com/collections/back-in-stock";
 
-const CRON = "59 00 * * *";
+const CRON = "15 01 * * *";
 
 export const handler: Handler = schedule(
   CRON,
@@ -18,11 +19,10 @@ export const handler: Handler = schedule(
     const body = await fetch(ENDPOINT);
     const result = await mofiScraper(body);
 
+    await sendSMS(result);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: result,
-      }),
     };
   }
 );
