@@ -9,7 +9,7 @@ export function mofiParser(elements: Cheerio<Element>, $: CheerioAPI): string {
     const title = content?.split("-")?.[1]?.trim()?.toLowerCase() ?? "";
 
     if (!MOFI_FILTERS.ALBUMS.includes(title)) {
-      result += `${title}\n`;
+      result += `${content}\n`;
     }
   });
 
