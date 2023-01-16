@@ -11,7 +11,7 @@ import fetch from "../../../src/utils/fetch";
 const ENDPOINT =
   process.env?.MOFI_ENDPOINT || "https://mofi.com/collections/back-in-stock";
 
-const CRON = "15 01 * * *";
+const CRON = "20 01 * * *";
 
 export const handler: Handler = schedule(
   CRON,
