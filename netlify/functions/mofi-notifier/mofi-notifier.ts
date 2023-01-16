@@ -1,5 +1,5 @@
 import { Handler, HandlerContext, HandlerEvent } from "@netlify/functions";
-import cheerio from "cheerio";
+import { mofiScraper } from "../../../src/scrapers/mofi-scraper";
 import fetch from "../../../src/utils/fetch";
 
 const ENDPOINT =
@@ -10,11 +10,12 @@ export const handler: Handler = async (
   context: HandlerContext
 ) => {
   const body = await fetch(ENDPOINT);
+  const result = await mofiScraper(body);
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: body,
+      message: result,
     }),
   };
 };
